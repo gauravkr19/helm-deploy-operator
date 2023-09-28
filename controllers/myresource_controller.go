@@ -188,7 +188,9 @@ func (r *MyResourceReconciler) extendPVC(ctx context.Context, myResource *gaurav
 // DEPLOYMENT
 func (r *MyResourceReconciler) createOrUpdateDeployment(ctx context.Context, myResource *gauravkr19devv1alpha1.MyResource) error {
 	logger := log.FromContext(ctx)
-	// dbHostVal := ""
+
+	// create a string to point to a statefulSet Pod
+	dbHostVal := myResource.Name + "-db" + "-statefulset-service" + myResource.Namespace + ".svc.cluster.local"
 
 	logger.Info("Reconciling Deployment...")
 
@@ -223,7 +225,7 @@ func (r *MyResourceReconciler) createOrUpdateDeployment(ctx context.Context, myR
 									},
 								}},
 								{Name: "DB_HOST",
-									Value: "myresource-sample-db-statefulset-service.myapp-namespace.svc.cluster.local",
+									Value: dbHostVal,
 								},
 								{Name: "DB_NAME",
 									Value: "my_database",

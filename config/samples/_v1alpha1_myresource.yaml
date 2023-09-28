@@ -16,5 +16,5 @@ spec:
   pvcSize: "1Gi"
   pvcExtensionNeeded: false
   newPVCSize: "2Gi"
-  targetNamespace: "myapp-namespace"
+  targetNamespace: "myapp-new-ns"
 
