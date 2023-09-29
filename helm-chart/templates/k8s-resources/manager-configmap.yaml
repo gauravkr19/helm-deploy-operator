@@ -15,5 +15,5 @@ data:
 kind: ConfigMap
 metadata:
   name: {{ include "chart.fullname" . }}-manager-config
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.controller.namespace }}
 

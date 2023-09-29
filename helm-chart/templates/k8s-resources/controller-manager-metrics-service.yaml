@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/part-of: myresource
     control-plane: controller-manager
   name: {{ include "chart.fullname" . }}-controller-manager
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.controller.namespace }}
 spec:
   ports:
   - name: https

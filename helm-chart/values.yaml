@@ -3,6 +3,8 @@ controller:
   # Set the number of replicas for the operator.
   # @type: integer
   replicas: 1
+  # namespace to deploy operator
+  namespace: myresource-crudapp-operator
 
   kubeRbacProxy:
     # Image sets the repo and tag of the kube-rbac-proxy image to use for the controller.
@@ -40,8 +42,8 @@ controller:
 # Values for deploying the CR - myResource
 myResource:
 
-  # string namespace to deploy Deployment, StatefuleSet and its PV
-  targetNamespace: "myapp-namespace"
+  # namespace(string) to deploy the workloads
+  targetNamespace: "crudapp-namespace"
 
   # Size of the PVC when Deploying the for workload 
   pvcSize: "1Gi"

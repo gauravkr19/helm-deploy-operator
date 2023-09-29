@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: role
     app.kubernetes.io/part-of: myresource
   name: {{ include "chart.fullname" . }}-leader-election-role
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.controller.namespace }}
 rules:
 - apiGroups:
   - ""

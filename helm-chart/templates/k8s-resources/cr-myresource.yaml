@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/part-of: myresource
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: myresource
-  name: {{ include "chart.fullname" . }}-crud-app
+  name: {{ include "chart.fullname" . }}
   namespace: {{ .Values.myResource.targetNamespace }}
 spec:
   image: {{ .Values.myResource.image }}
