@@ -190,7 +190,7 @@ func (r *MyResourceReconciler) createOrUpdateDeployment(ctx context.Context, myR
 	logger := log.FromContext(ctx)
 
 	// create a string to point to a statefulSet Pod
-	dbHostVal := myResource.Name + "-db" + "-statefulset-service" + myResource.Namespace + ".svc.cluster.local"
+	dbHostVal := myResource.Name + "-db" + "-statefulset-service." + myResource.Spec.TargetNamespace + ".svc.cluster.local"
 
 	logger.Info("Reconciling Deployment...")
 
