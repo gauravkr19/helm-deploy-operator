@@ -56,4 +56,11 @@ myResource:
   image: "docker.io/gauravkr19/go-app"
   imageDB: "docker.io/gauravkr19/postgresdb"  
 
+# The helm release expects Database password via the Kubernetes Secret. Create the secret and pass
+# secret name as value.
+secrets:
+  mySecret:
+    required: true
+
+
 

@@ -90,13 +90,14 @@ func (r *MyResourceReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	}
 
 	// Create or update the Secret for Deployment
-	secretName := myResource.Name + "-app" + "-secret"
-	secKey := "somekey"
-	secVal := "someval"
-	if err := r.createSecret(ctx, myResource, secretName, secKey, secVal); err != nil && !errors.IsAlreadyExists(err) {
-		logger.Error(err, "Failed to create or update Secret")
-		return ctrl.Result{}, err
-	}
+	// secretName := myResource.Name + "-app" + "-secret"
+	// secKey := "somekey"
+	// secVal := "someval"
+	// if err := r.createSecret(ctx, myResource, secretName, secKey, secVal); err != nil && !errors.IsAlreadyExists(err) {
+	// 	logger.Error(err, "Failed to create or update Secret")
+	// 	return ctrl.Result{}, err
+	// }
+
 	// Create or update the Secret for Statefulset
 	secretName = myResource.Name + "-db" + "-secret"
 	if err := r.createSecret(ctx, myResource, secretName, secKey, secVal); err != nil && !errors.IsAlreadyExists(err) {
@@ -214,16 +215,7 @@ func (r *MyResourceReconciler) createOrUpdateDeployment(ctx context.Context, myR
 						{
 							Name:  myResource.Name + "-app" + "-container",
 							Image: myResource.Spec.Image,
-							Env: []corev1.EnvVar{{
-								Name: "POSTGRES_PASSWORD",
-								ValueFrom: &corev1.EnvVarSource{
-									SecretKeyRef: &corev1.SecretKeySelector{
-										LocalObjectReference: corev1.LocalObjectReference{
-											Name: myResource.Name + "-app" + "-secret",
-										},
-										Key: "POSTGRES_PASSWORD",
-									},
-								}},
+							Env: []corev1.EnvVar{
 								{Name: "DB_HOST",
 									Value: dbHostVal,
 								},
@@ -284,6 +276,7 @@ func (r *MyResourceReconciler) CreateOrUpdate(ctx context.Context, obj client.Ob
 	return err
 }
 
+// func createSecret to create secret
 func (r *MyResourceReconciler) createSecret(ctx context.Context, myResource *gauravkr19devv1alpha1.MyResource, secretName string, secKey string, secVal string) error {
 	logger := log.FromContext(ctx)
 	secKey = "POSTGRES_PASSWORD"
@@ -312,6 +305,46 @@ func (r *MyResourceReconciler) createSecret(ctx context.Context, myResource *gau
 	logger.Info("Secret creation completed successfully")
 	return nil
 }
+
+    // Define a Secret with the data from the CR
+    secret := &corev1.Secret{}
+    secretName := req.NamespacedName.Name + "-my-secret"
+    if err := r.Get(ctx, types.NamespacedName{Name: secretName, Namespace: req.Namespace}, secret); err != nil {
+        if errors.IsNotFound(err) {
+            // Secret does not exist, create it
+            secret := &corev1.Secret{
+                ObjectMeta: metav1.ObjectMeta{
+                    Name:      secretName,
+                    Namespace: req.Namespace,
+                },
+                Type: corev1.SecretTypeOpaque,
+                Data: map[string][]byte{
+                    "username": []byte(myapp.Spec.SecretData.Username),
+                    "password": []byte(myapp.Spec.SecretData.Password),
+                },
+            }
+            if err := controllerutil.SetControllerReference(myapp, secret, r.Scheme); err != nil {
+                log.Error(err, "Failed to set controller reference for Secret")
+                return reconcile.Result{}, err
+            }
+            if err := r.Create(ctx, secret); err != nil {
+                log.Error(err, "Failed to create Secret")
+                return reconcile.Result{}, err
+            }
+            log.Info("Created Secret", "Secret.Name", secret.Name)
+        } else {
+            // Error fetching the Secret
+            log.Error(err, "Failed to get Secret")
+            return reconcile.Result{}, err
+        }
+    }
+
+    // Define your Deployment and PodSec here based on the Secret
+    // ...
+
+    return reconcile.Result{}, nil
+}
+
 
 // STATEFULSET
 func (r *MyResourceReconciler) createOrUpdateStatefulSet(ctx context.Context, myResource *gauravkr19devv1alpha1.MyResource) error {
