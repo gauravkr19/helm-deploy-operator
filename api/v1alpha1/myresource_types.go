@@ -41,8 +41,8 @@ type MyResourceSpec struct {
 
 // SecretData defines the Secret data
 type SecretData struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	DBUser     string `json:"dbUser"`
+	DBPassword string `json:"dbPassword"`
 }
 
 // MyResourceStatus defines the observed state of MyResource
