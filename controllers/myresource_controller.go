@@ -291,7 +291,10 @@ func (r *MyResourceReconciler) createSecret(ctx context.Context, myResource *gau
 	secret := &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{Name: secretName, Namespace: myResource.Namespace},
 		Type:       corev1.SecretTypeOpaque,
-		StringData: sec,
+		Data: map[string][]byte{
+			"username": []byte(myapp.Spec.SecretData.Username),
+			"password": []byte(myapp.Spec.SecretData.Password),
+		},
 	}
 	// Create the Secret
 	if err := r.Client.Create(ctx, secret); err != nil && !errors.IsAlreadyExists(err) {

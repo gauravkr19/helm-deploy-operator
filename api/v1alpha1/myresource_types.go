@@ -34,8 +34,15 @@ type MyResourceSpec struct {
 	StatefulSetReplicas int32  `json:"statefulSetReplicas,omitempty"`
 	PVCSize             string `json:"pvcSize,omitempty"`
 
-	PVCExtensionNeeded bool   `json:"pvcExtensionNeeded"`
-	NewPVCSize         string `json:"newPVCSize"`
+	PVCExtensionNeeded bool       `json:"pvcExtensionNeeded"`
+	NewPVCSize         string     `json:"newPVCSize"`
+	SecretData         SecretData `json:"secretData"`
+}
+
+// SecretData defines the Secret data
+type SecretData struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // MyResourceStatus defines the observed state of MyResource
