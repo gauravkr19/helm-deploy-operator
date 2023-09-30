@@ -17,5 +17,5 @@ spec:
   pvcSize: {{ .Values.myResource.pvcSize }}
   pvcExtensionNeeded: {{ .Values.myResource.pvcExtensionNeeded }}
   newPVCSize: {{ .Values.myResource.newPVCSize }}
-  # targetNamespace: {{ .Release.Namespace }}
+
 

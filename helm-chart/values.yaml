@@ -43,9 +43,6 @@ controller:
 # Values for deploying the CR - myResource
 myResource:
 
-  # namespace(string) to deploy the workloads
-  # targetNamespace: "crudapp-namespace"
-
   # Size of the PVC when Deploying the for workload 
   pvcSize: "1Gi"
  
