@@ -93,39 +93,39 @@ func (r *MyResourceReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	secretName := myResource.Name + "-app" + "-secret"
 	secKey := "somekey"
 	secVal := "someval"
-	if err := r.createSecret(ctx, myResource, secretName, secKey, secVal); err != nil {
+	if err := r.createSecret(ctx, myResource, secretName, secKey, secVal); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create or update Secret")
 		return ctrl.Result{}, err
 	}
 	// Create or update the Secret for Statefulset
 	secretName = myResource.Name + "-db" + "-secret"
-	if err := r.createSecret(ctx, myResource, secretName, secKey, secVal); err != nil {
+	if err := r.createSecret(ctx, myResource, secretName, secKey, secVal); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create or update Secret")
 		return ctrl.Result{}, err
 	}
 
 	// Create Service for Deployment
 	deploymentServiceName := myResource.Name + "-app" + "-deployment-service"
-	if err := r.createServiceApp(ctx, myResource, deploymentServiceName); err != nil {
+	if err := r.createServiceApp(ctx, myResource, deploymentServiceName); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create Deployment Service")
 		return ctrl.Result{}, err
 	}
 
 	// Create Service for StatefulSet
 	statefulSetServiceName := myResource.Name + "-db" + "-statefulset-service"
-	if err := r.createServiceDB(ctx, myResource, statefulSetServiceName); err != nil {
+	if err := r.createServiceDB(ctx, myResource, statefulSetServiceName); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create StatefulSet Service")
 		return ctrl.Result{}, err
 	}
 
 	// Reconcile the Deployment
-	if err := r.createOrUpdateDeployment(ctx, myResource); err != nil {
+	if err := r.createOrUpdateDeployment(ctx, myResource); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to reconcile Deployment")
 		return ctrl.Result{}, err
 	}
 
 	// Reconcile the StatefulSet
-	if err := r.createOrUpdateStatefulSet(ctx, myResource); err != nil {
+	if err := r.createOrUpdateStatefulSet(ctx, myResource); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to reconcile StatefulSet")
 		return ctrl.Result{}, err
 	}
@@ -301,7 +301,7 @@ func (r *MyResourceReconciler) createSecret(ctx context.Context, myResource *gau
 		StringData: sec,
 	}
 	// Create the Secret
-	if err := r.Client.Create(ctx, secret); err != nil {
+	if err := r.Client.Create(ctx, secret); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create Secret")
 		return err
 	}
@@ -383,7 +383,7 @@ func (r *MyResourceReconciler) createOrUpdateStatefulSet(ctx context.Context, my
 	}
 
 	// Use the custom CreateOrUpdate function to create or update the StatefulSet
-	if err := r.CreateOrUpdate(ctx, statefulSet); err != nil {
+	if err := r.CreateOrUpdate(ctx, statefulSet); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create or update StatefulSet")
 		return err
 	}
@@ -446,7 +446,7 @@ func (r *MyResourceReconciler) createServiceApp(ctx context.Context, myResource 
 	ctrl.SetControllerReference(myResource, service, r.Scheme)
 
 	// Create the Service
-	if err := r.Client.Create(ctx, service); err != nil {
+	if err := r.Client.Create(ctx, service); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create Service")
 		return err
 	}
@@ -479,7 +479,7 @@ func (r *MyResourceReconciler) createServiceDB(ctx context.Context, myResource *
 	ctrl.SetControllerReference(myResource, service, r.Scheme)
 
 	// Create the Service
-	if err := r.Client.Create(ctx, service); err != nil {
+	if err := r.Client.Create(ctx, service); err != nil && !errors.IsAlreadyExists(err) {
 		logger.Error(err, "Failed to create Service")
 		return err
 	}
