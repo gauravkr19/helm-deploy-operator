@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: myresource
   name: {{ include "chart.fullname" . }}
-  namespace: {{ .Values.myResource.targetNamespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   image: {{ .Values.myResource.image }}
   imageDB: {{ .Values.myResource.imageDB }}
@@ -17,5 +17,5 @@ spec:
   pvcSize: {{ .Values.myResource.pvcSize }}
   pvcExtensionNeeded: {{ .Values.myResource.pvcExtensionNeeded }}
   newPVCSize: {{ .Values.myResource.newPVCSize }}
-  targetNamespace: {{ .Values.myResource.targetNamespace }}
+  # targetNamespace: {{ .Release.Namespace }}
 

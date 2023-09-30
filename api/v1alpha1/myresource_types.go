@@ -36,7 +36,7 @@ type MyResourceSpec struct {
 
 	PVCExtensionNeeded bool   `json:"pvcExtensionNeeded"`
 	NewPVCSize         string `json:"newPVCSize"`
-	TargetNamespace    string `json:"targetNamespace"`
+	// TargetNamespace    string `json:"targetNamespace"` --taken care by helm
 }
 
 // MyResourceStatus defines the observed state of MyResource

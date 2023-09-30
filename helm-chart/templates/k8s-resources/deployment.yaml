@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: serviceaccount
     app.kubernetes.io/part-of: myresource
   name: {{ include "chart.fullname" . }}-controller-manager
-  namespace: {{ .Values.controller.namespace }}
+  namespace: {{ .Release.Namespace }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,7 +23,7 @@ metadata:
     app.kubernetes.io/part-of: myresource
     control-plane: controller-manager
   name: {{ include "chart.fullname" . }}-controller-manager
-  namespace: {{ .Values.controller.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.controller.replicas }}
   selector:

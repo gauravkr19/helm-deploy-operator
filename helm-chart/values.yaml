@@ -3,8 +3,9 @@ controller:
   # Set the number of replicas for the operator.
   # @type: integer
   replicas: 1
+
   # namespace to deploy operator
-  namespace: myresource-crudapp-operator
+  # namespace: myresource-crudapp-operator
 
   kubeRbacProxy:
     # Image sets the repo and tag of the kube-rbac-proxy image to use for the controller.
@@ -27,7 +28,7 @@ controller:
     # Image sets the repo and tag of the vault-secrets-operator image to use for the controller.
     image:
       repository: docker.io/gauravkr19/myresource
-      tag: 0.2.2
+      tag: 0.2.4
 
     # Configures the default resources for the controller-manager container.
     # @type: map
@@ -43,7 +44,7 @@ controller:
 myResource:
 
   # namespace(string) to deploy the workloads
-  targetNamespace: "crudapp-namespace"
+  # targetNamespace: "crudapp-namespace"
 
   # Size of the PVC when Deploying the for workload 
   pvcSize: "1Gi"
