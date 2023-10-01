@@ -423,6 +423,7 @@ func (r *MyResourceReconciler) createPVC(ctx context.Context, myResource *gaurav
 	return nil
 }
 
+// Create Service for App
 func (r *MyResourceReconciler) createServiceApp(ctx context.Context, myResource *gauravkr19devv1alpha1.MyResource, serviceName string) error {
 	logger := log.FromContext(ctx)
 	logger.Info("Creating Service...")
@@ -454,6 +455,8 @@ func (r *MyResourceReconciler) createServiceApp(ctx context.Context, myResource 
 	logger.Info("Service creation completed successfully")
 	return nil
 }
+
+// Create Service for DB
 func (r *MyResourceReconciler) createServiceDB(ctx context.Context, myResource *gauravkr19devv1alpha1.MyResource, serviceName string) error {
 	logger := log.FromContext(ctx)
 	logger.Info("Creating Service...")
