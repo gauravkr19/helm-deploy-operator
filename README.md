@@ -1,14 +1,19 @@
 # myresource
-// myresource operator deploys a frontend app perform CRUD operators and stores the data in Postgres database on Kubernetes, tested on GKE.
+myresource operator deploys a frontend app which performs CRUD operatorions and stores the data in Postgres database on Kubernetes.
 
 ## Description
 ### Operator features
-Operator is developed using Operator SDK framework. It deploys the frontend CRUD app as a Deployment and a database as StatefulSet backed by a PVC. The PVC can be extended by passing true value to pvcExtensionNeeded paramter in CR or Helm values.yaml. The operator is packaged into Helm chart for easy deployment. 
+Operator is developed using Operator SDK framework. It deploys the frontend CRUD app as a Deployment and a database as StatefulSet. The database is backed by a PVC. The PVC can be extended by passing `true` value to `pvcExtensionNeeded` field in CR or Helm values.yaml. The operator is packaged into Helm chart for easy deployment. 
 
 ### CRUD App
+The app has 4 APIs access internally with in the Pod's shell at the following path:
+* `api/create` for Create
+* `api/records` for Read
+* `api/update` for Update
+* `api/delete` for Delete
 
 ### Helm values.yaml
-
+Helm Chart requires values for  `dbUser` `dbPassword`. This is hardecoded in values.yaml but should be passed as `--set' field to not expose the secrets.
 
 
 ## Getting Started
