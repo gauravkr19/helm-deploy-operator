@@ -27,10 +27,10 @@ The installation fails without the values of `bUser`, `dbPassword` passed via `v
 
 
 ### Important paths listed for quick reference
-Helm Chart files `https://github.com/gauravkr19/myresource-operator/tree/main/docs/charts`.
-controller.go `https://github.com/gauravkr19/myresource-operator/blob/main/controllers/myresource_controller.go`.
-types.go `https://github.com/gauravkr19/myresource-operator/blob/main/api/v1alpha1/myresource_types.go`.
-
+* Helm Chart files `https://github.com/gauravkr19/myresource-operator/tree/main/docs/charts`.
+* controller.go `https://github.com/gauravkr19/myresource-operator/blob/main/controllers/myresource_controller.go`.
+* types.go `https://github.com/gauravkr19/myresource-operator/blob/main/api/v1alpha1/myresource_types.go`.
+* crudapp
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
