@@ -15,12 +15,15 @@ The app has 4 APIs accessed internaly within the Pod's shell at the following pa
 ### Helm values.yaml
 Helm Chart requires values for  `dbUser` `dbPassword`. This is hardecoded in values.yaml but should be passed as `--set' field to not expose the secrets.
 The Helm chart is served from Github Pages and the repo can be added using:
-```
+```sh
 helm repo add crud-app https://gauravkr19.github.io/myresource-operator
 helm search repo
 ```
 The operator can be installed with command:
-`helm install crudapp crud-app/myresource-operator  -f docs/charts/values.yaml  --namespace crudapp --create-namespace`
+
+```sh
+helm install crudapp crud-app/myresource-operator  -f docs/charts/values.yaml  --namespace crudapp --create-namespace
+```
 
 The operator and the apps are installed in `crudapp` namespace created by helm, else will be deployed in `default` namespace
 The installation fails without the values of `bUser`, `dbPassword` passed via `values.yaml`. These values are hardcoded for demo purpose.
