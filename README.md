@@ -14,6 +14,22 @@ The app has 4 APIs access internally with in the Pod's shell at the following pa
 
 ### Helm values.yaml
 Helm Chart requires values for  `dbUser` `dbPassword`. This is hardecoded in values.yaml but should be passed as `--set' field to not expose the secrets.
+The Helm chart is served from Github Pages and the repo can be added using:
+```
+helm repo add crud-app https://gauravkr19.github.io/myresource-operator
+helm search repo
+```
+The operator can be installed with command:
+`helm install crudapp crud-app/myresource-operator  -f docs/charts/values.yaml  --namespace crudapp --create-namespace`
+
+The operator and the apps are installed in `crudapp` namespace created by helm, else will be deployed in `default` namespace
+The installation fails without the values of `bUser`, `dbPassword` passed via `values.yaml`. These values are hardcoded for demo purpose.
+
+
+### Important paths listed for quick reference
+Helm Chart files `https://github.com/gauravkr19/myresource-operator/tree/main/docs/charts`
+controller.go `https://github.com/gauravkr19/myresource-operator/blob/main/controllers/myresource_controller.go`
+types.go `https://github.com/gauravkr19/myresource-operator/blob/main/api/v1alpha1/myresource_types.go`
 
 
 ## Getting Started
