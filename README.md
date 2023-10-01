@@ -1,12 +1,12 @@
 # myresource
-myresource operator deploys a frontend app which performs CRUD operatorions and stores the data in Postgres database on Kubernetes.
+myresource operator deploys a frontend app which performs CRUD operations and stores the data in Postgres database in Kubernetes, GKE.
 
 ## Description
 ### Operator features
 Operator is developed using Operator SDK framework. It deploys the frontend CRUD app as a Deployment and a database as StatefulSet. The database is backed by a PVC. The PVC can be extended by passing `true` value to `pvcExtensionNeeded` field in CR or Helm values.yaml. The operator is packaged into Helm chart for easy deployment. 
 
 ### CRUD App
-The app has 4 APIs access internally with in the Pod's shell at the following path:
+The app has 4 APIs accessed internaly within the Pod's shell at the following path:
 * `api/create` for Create
 * `api/records` for Read
 * `api/update` for Update
@@ -27,9 +27,9 @@ The installation fails without the values of `bUser`, `dbPassword` passed via `v
 
 
 ### Important paths listed for quick reference
-Helm Chart files `https://github.com/gauravkr19/myresource-operator/tree/main/docs/charts`
-controller.go `https://github.com/gauravkr19/myresource-operator/blob/main/controllers/myresource_controller.go`
-types.go `https://github.com/gauravkr19/myresource-operator/blob/main/api/v1alpha1/myresource_types.go`
+Helm Chart files `https://github.com/gauravkr19/myresource-operator/tree/main/docs/charts`.
+controller.go `https://github.com/gauravkr19/myresource-operator/blob/main/controllers/myresource_controller.go`.
+types.go `https://github.com/gauravkr19/myresource-operator/blob/main/api/v1alpha1/myresource_types.go`.
 
 
 ## Getting Started
