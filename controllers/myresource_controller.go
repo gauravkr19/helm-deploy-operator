@@ -26,6 +26,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -213,6 +214,18 @@ func (r *MyResourceReconciler) createOrUpdateDeployment(ctx context.Context, myR
 						{
 							Name:  myResource.Name + "-app" + "-container",
 							Image: myResource.Spec.Image,
+							ReadinessProbe: &corev1.Probe{
+								ProbeHandler: corev1.ProbeHandler{
+									HTTPGet: &corev1.HTTPGetAction{
+										Path:   "/healthz",
+										Port:   intstr.FromInt(8080),
+										Scheme: corev1.URISchemeHTTP,
+									},
+								},
+								FailureThreshold: 3,
+								SuccessThreshold: 1,
+								TimeoutSeconds:   1,
+							},
 							EnvFrom: []corev1.EnvFromSource{
 								{
 									SecretRef: &corev1.SecretEnvSource{
